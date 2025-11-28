@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TaskController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -23,3 +24,4 @@ Route::post('/tasks', [TaskController::class, 'store']);
 Route::get('/tasks', [TaskController::class, 'index']);    
 Route::get('/tasks/export', [TaskController::class, 'export']);
 Route::delete('/tasks/hapus/{id}', [TaskController::class, 'destroy']);
+Route::delete('/tasks/hapus-all', [TaskController::class, 'destroyAll']);

@@ -108,18 +108,48 @@ class TaskController extends Controller
             $row++;
         }
 
-        // Summary row
-        $sheet->setCellValue('A'.$row, 'Total Tasks');
-        $sheet->setCellValue('B'.$row, $tasks->count());
-        $sheet->setCellValue('D'.$row, $totalTime);
+            
+        $summaryStartCol = 'H';
+        $summaryRow = 1; 
 
+        $sheet->setCellValue($summaryStartCol . ($summaryRow), 'Summary');
+        $sheet->getStyle($summaryStartCol . ($summaryRow))->getFont()->setBold(true);
+
+        $sheet->setCellValue('H' . ($summaryRow + 1), 'Total Tasks');
+        $sheet->setCellValue('H' . ($summaryRow + 2), 'Total Time Tracked');
+
+        $sheet->setCellValue('I' . ($summaryRow + 1), $tasks->count());
+        $sheet->setCellValue('I' . ($summaryRow + 2), $totalTime);
+
+        $sheet->getStyle("H{$summaryRow}:I" . ($summaryRow + 2))->applyFromArray([
+            'borders' => [
+                'allBorders' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                    'color' => ['argb' => 'FF000000'],
+                ],
+            ],
+        ]);
+
+        $styleArray = [
+            'borders' => [
+                'allBorders' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                    'color' => ['argb' => 'FF000000'],
+                ],
+            ],
+        ];
+
+        $lastRow = $row;
+        $sheet->getStyle("A1:F{$lastRow}")->applyFromArray($styleArray);
+
+        // Export
         $writer = new Xlsx($spreadsheet);
         $fileName = 'tasks.xlsx';
 
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header('Content-Disposition: attachment; filename="'.$fileName.'"');
         $writer->save('php://output');
-        exit;
+        exit;;
     }
     public function destroy($id)
     {
@@ -138,5 +168,22 @@ class TaskController extends Controller
         ], 200);
     }
 
+    public function destroyAll()
+    {
+        $count = Task::count(); 
+
+        if ($count === 0) {
+            return response()->json([
+                'message' => 'No tasks to delete'
+            ], 404);
+        }
+
+        Task::truncate(); 
+
+        return response()->json([
+            'message' => 'All tasks deleted successfully',
+            'deleted_count' => $count
+        ], 200);
+    }
 
 }
