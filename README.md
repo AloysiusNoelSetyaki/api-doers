@@ -41,16 +41,16 @@ GET ```/api/tasks```
 POST ```/api/tasks```
 
 Body contoh:
-
-```{```
-```"title": "Finish report",```
-```assignee": "Jane",```
-```due_date": "2025-12-01",```
-```"time_tracked": 2,```
-```"status": "pending",```
-```"priority": "medium"```
-```}```
-
+<pre>
+```{
+"title": "Finish report",
+"assignee": "Jane",
+"due_date": "2025-12-01",
+"time_tracked": 2,
+"status": "pending",
+"priority": "medium"
+}```
+</pre>
 3. Delete task
 
 DELETE ```/api/tasks/hapus/{id}```
