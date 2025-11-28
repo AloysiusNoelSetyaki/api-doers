@@ -14,22 +14,22 @@
 
 # Cara Menjalankan Project
 1. Install dependencies
-``` composer install ```
+ composer install
 
 2. Copy environment
-``` cp .env.example .env ```
+cp .env.example .env
 
 3. Generate key
-``` php artisan key:generate ```
+php artisan key:generate
 
 4. Buat database & sesuaikan .env
-``` DB_DATABASE=tasks_db ```
+ DB_DATABASE=tasks_db
 
 5. Jalankan migration
-``` php artisan migrate ```
+php artisan migrate
 
 6. Jalankan server
-``` php artisan serve ```
+php artisan serve
 
 ### API Endpoints
 1. Get all tasks
@@ -64,15 +64,11 @@ GET /api/tasks/export
 
 Filter yang tersedia:
 
-title
-
-assignee (multi)
-
-start, end (due_date range)
-
-min, max (time_tracked)
-
-status (multi)
+- title
+- assignee (multi)
+- start, end (due_date range)
+- min, max (time_tracked)
+- status (multi)
 
 priority (multi)
 
@@ -82,11 +78,7 @@ Contoh:
 📦 Export Excel
 
 Hasil export berisi:
-
-Semua tasks yang sesuai filter
-
-Total tasks
-
-Total time tracked
-
-Format tabel otomatis
+- Semua tasks yang sesuai filter
+- Total tasks
+- Total time tracked
+- Format tabel otomatis
