@@ -149,7 +149,7 @@ class TaskController extends Controller
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header('Content-Disposition: attachment; filename="'.$fileName.'"');
         $writer->save('php://output');
-        exit;;
+        exit;
     }
     public function destroy($id)
     {
