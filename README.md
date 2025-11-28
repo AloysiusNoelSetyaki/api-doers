@@ -41,14 +41,15 @@ GET ```/api/tasks```
 POST ```/api/tasks```
 
 Body contoh:
-```{
-"title": "Finish report",
-"assignee": "Jane",
-"due_date": "2025-12-01",
-"time_tracked": 2,
-"status": "pending",
-"priority": "medium"
-}```
+
+```{```
+```"title": "Finish report",```
+```assignee": "Jane",```
+```due_date": "2025-12-01",```
+```"time_tracked": 2,```
+```"status": "pending",```
+```"priority": "medium"```
+```}```
 
 3. Delete task
 
@@ -73,7 +74,7 @@ Filter yang tersedia:
 priority (multi)
 
 Contoh:
-/api/tasks/export?priority=low,high&status=pending
+```/api/tasks/export?priority=low,high&status=pending```
 
 📦 Export Excel
 
