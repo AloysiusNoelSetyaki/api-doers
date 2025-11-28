@@ -22,3 +22,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/tasks', [TaskController::class, 'store']);   
 Route::get('/tasks', [TaskController::class, 'index']);    
 Route::get('/tasks/export', [TaskController::class, 'export']);
+Route::delete('/tasks/hapus/{id}', [TaskController::class, 'destroy']);

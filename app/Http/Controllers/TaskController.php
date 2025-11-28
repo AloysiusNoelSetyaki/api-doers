@@ -12,9 +12,30 @@ class TaskController extends Controller
 {
     public function index(Request $request)
     {
-        // basic: return all tasks
-        return response()->json(Task::all());
+        $query = Task::query();
+
+        if ($request->filled('title')) {
+            $query->where('title', 'like', '%'.$request->title.'%');
+        }
+        if ($request->filled('assignee')) {
+            $query->whereIn('assignee', explode(',', $request->assignee));
+        }
+        if ($request->filled('start') && $request->filled('end')) {
+            $query->whereBetween('due_date', [$request->start, $request->end]);
+        }
+        if ($request->filled('min') && $request->filled('max')) {
+            $query->whereBetween('time_tracked', [$request->min, $request->max]);
+        }
+        if ($request->filled('status')) {
+            $query->whereIn('status', explode(',', $request->status));
+        }
+        if ($request->filled('priority')) {
+            $query->whereIn('priority', explode(',', $request->priority));
+        }
+
+        return response()->json($query->get());
     }
+
 
     public function store(Request $request)
     {
@@ -100,5 +121,22 @@ class TaskController extends Controller
         $writer->save('php://output');
         exit;
     }
+    public function destroy($id)
+    {
+        $task = Task::find($id);
+
+        if (!$task) {
+            return response()->json([
+                'message' => 'Task not found'
+            ], 404);
+        }
+
+        $task->delete();
+
+        return response()->json([
+            'message' => 'Task deleted successfully'
+        ], 200);
+    }
+
 
 }
