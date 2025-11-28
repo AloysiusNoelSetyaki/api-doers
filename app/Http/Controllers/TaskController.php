@@ -37,8 +37,37 @@ class TaskController extends Controller
     }
 
 
-    public function store(Request $request)
+   public function store(Request $request)
     {
+        $data = $request->all();
+
+        // MULTI INSERT by ARRAY
+        if (isset($data[0]) && is_array($data[0])) {
+
+            $validated = $request->validate([
+                '*.title' => 'required|string',
+                '*.assignee' => 'nullable|string',
+                '*.due_date' => 'required|date|after_or_equal:today',
+                '*.time_tracked' => 'numeric|min:0',
+                '*.status' => 'nullable|in:pending,open,in_progress,completed',
+                '*.priority' => 'required|in:low,medium,high',
+            ]);
+
+            $tasks = [];
+
+            foreach ($validated as $item) {
+                $item['time_tracked'] = $item['time_tracked'] ?? 0;
+                $item['status'] = $item['status'] ?? 'pending';
+                $tasks[] = Task::create($item);
+            }
+
+            return response()->json([
+                'message' => 'Multiple tasks created successfully',
+                'data' => $tasks
+            ], 201);
+        }
+
+        // SINGLE INSERT
         $validated = $request->validate([
             'title' => 'required|string',
             'assignee' => 'nullable|string',
@@ -48,7 +77,6 @@ class TaskController extends Controller
             'priority' => 'required|in:low,medium,high',
         ]);
 
-        // defaults
         $validated['time_tracked'] = $validated['time_tracked'] ?? 0;
         $validated['status'] = $validated['status'] ?? 'pending';
 
@@ -56,9 +84,11 @@ class TaskController extends Controller
 
         return response()->json([
             'message' => 'Task created successfully',
-            'data'    => $task
+            'data' => $task
         ], 201);
     }
+
+
 
    
     public function export(Request $request)
