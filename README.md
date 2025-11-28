@@ -14,53 +14,53 @@
 
 # Cara Menjalankan Project
 1. Install dependencies
- composer install
+ ```composer install```
 
 2. Copy environment
-cp .env.example .env
+ ```cp .env.example .env```
 
 3. Generate key
 php artisan key:generate
 
 4. Buat database & sesuaikan .env
- DB_DATABASE=tasks_db
+ ```DB_DATABASE=tasks_db```
 
 5. Jalankan migration
-php artisan migrate
+ ```php artisan migrate```
 
 6. Jalankan server
-php artisan serve
+ ```php artisan serve```
 
 ### API Endpoints
 1. Get all tasks
 
-GET /api/tasks
+GET ```/api/tasks```
 
 2. Create task
 
-POST /api/tasks
+POST ```/api/tasks```
 
 Body contoh:
-{
+```{
 "title": "Finish report",
 "assignee": "Jane",
 "due_date": "2025-12-01",
 "time_tracked": 2,
 "status": "pending",
 "priority": "medium"
-}
+}```
 
 3. Delete task
 
-DELETE /api/tasks/hapus/{id}
+DELETE ```/api/tasks/hapus/{id}```
 
 4. Delete ALL tasks
 
-DELETE /api/tasks/hapus-all
+DELETE ```/api/tasks/hapus-all```
 
 5. Export tasks to Excel
 
-GET /api/tasks/export
+GET ```/api/tasks/export```
 
 Filter yang tersedia:
 
